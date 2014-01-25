@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="oli">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +12,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="css/oli.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <link href="css/prism.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -28,87 +25,28 @@
   <body>
 
     <div class="container">
+
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <!--<li class="active"><a href="#">Examples</a></li>-->
           <li><a href="http://docs.oli-lang.org">Language Specification</a></li>
-          <li><a href="#implementations">Implementations</a></li>
+          <li><a href="https://github.com/oli-lang/oli#implementations">Implementations</a></li>
+          <li><a href="https://github.com/oli-lang/oli/issues?labels=discussion%2Cenhancement&amp;page=1&amp;state=open">Discussion</a></li>
         </ul>
-        <h3 class="text-muted">Oli Language <small><cite title="Version">Alpha</cite></small></h3>
-
+        <h3 class="text-muted"><a href="#/" class="no-link">Oli Language</a> <small><cite title="Version">alpha</cite></small></h3>
       </div>
 
-      <div class="jumbotron">
-        <h2>Elegant, expressive, unobstructive and featured minimal language for humans</h2>
-        <p class="lead">When markup meets programming, Oli borns</p>
-        <!--<blockquote>
-          <p>When markup meets programming, Oli borns</p>
-          <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-        </blockquote>
-        -->
-        <p><a class="btn btn-lg btn-primary" href="#" role="button">See real case examples</a></p>
-      </div>
-
-      <div class="row marketing">
-
-        <div class="col-lg-12">
-          <h1>Why Oli?</h1>
-          <blockquote>
-            <p>Oli aims to be a confortable minimal language for general purposes which provides a mix of features from common markup languages and some basic features from programming languages</p>
-
-            <p>It has a beutiful, elegant and clean syntax with a non-obstructive grammar, that allows to use it for multiple purposes, like creating your own DSL. It was designed to be mainly consumed by humans</p>
-          </blockquote>
-        </div>
-
-        <div class="col-lg-12">
-          <h2>Oli is useful for</h2>
-          <ul>
-            <li>Create sintax clean and readable configuration files</li>
-            <li>Create you own DSL</li>
-            <li>Store human-writable/readable data, like manifest files</li>
-            <li>Data interchange format for non-complex schemas structures</li>
-            <li>Powerful markup-like templating language</li>
-          </ul>
-        </div>
-
-        <div class="col-lg-6">
-          <h2>Features</h2>
-          First class primitive types: boolean, number and strings
-Data references (formally variables)
-Copy or extend data structures and values
-Templaiting with string interpolation support
-Built-in logical, comparison and math operators
-          <h4>Primitives Types</h4>
-          <p>First class support for basic primitive types: boolean, number and strings</p>
-
-          <h4>Data structures</h4>
-          <p>List and data hashmaps support</p>
-
-          <h4>References</h4>
-          <p>Built-in support for data references inside the document</p>
-
-          <h4>References</h4>
-          <p>Built-in support for data references inside the document</p>
-        </div>
-
-        <div class="col-lg-6">
-          <h2>Design Goals</h2>
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div>
-
+      <div ng-view></div>
+      
       <div class="footer">
-        <p>Brought to you with love and coffee by <a href="https://github.com/h2non">Tom&aacute;s Aparicio</a>
-        <span class="pull-right"><a href="https://github.com/oli-lang">Github</a> | <a href="https://github.com/oli-lang/oli/issues">Discussion</a></span></p>
+        <p>Brought to the world with obsession and coffee by <a href="https://github.com/h2non">Tom&aacute;s Aparicio</a>
+        <span class="pull-right"><a href="https://github.com/oli-lang">Github</a> | <a href="https://github.com/oli-lang/oli#contributing">Contributing</a></span></p>
       </div>
-
     </div>
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular.route.min.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/oli.js"></script>
   </body>
 </html>

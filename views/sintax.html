@@ -1,0 +1,69 @@
+<h2>Sintax Overview</h2>
+
+<pre class="language-ruby" highlight>
+# this a is a comment
+name: Hello Oli!
+version: 0.1.0
+
+author:
+  name: Tomas Aparicio
+  email: tomas@aparicio.me
+  web: 'http://tomas.aparicio.me'
+  social: no # boolean primitive value
+end
+
+##
+  Multi-line comment
+##
+server deploy > zeus:
+  server > host url: 'http://zeus.server.com' # strings can be quoted
+  port: 9000 # number as primitive value
+  retry: yes # yes is a primitive 
+  # nested block
+  authentication: 
+    # lists can be implicit using commas
+    tokens:
+    end
+  end
+end
+
+# extends from zeus block
+server deploy >> zeus > hera:
+  server: 'http://hera.server.com'
+end
+
+# in-line nested structures
+hey: you: are: seeing: oli!
+
+# blocks can have attributes
+do(alias: make, type: 'user question'):
+  # multi-line nested structures
+  you: # implitic list
+    born
+    in # this is a string
+    [ 80, 'th' ], ? # old, ehn?
+  end
+end
+
+# void native type, that representes undefined
+non existence: void
+
+# creates a copy of hera block
+deploy:> hera
+
+# short-hand reference declaration operator
+&amp;flags: --debug --trace
+# hidden variable in compilation output 
+!&amp;verbose: --verbose
+
+# templating
+command: server.sh start *{flags}
+# math expressions
+&amp;fallback port: <[ *{flags} + 100 ]>
+
+# multi-line unquoted string
+log:
+  /var/log/deploy.log
+  /var/log/error.log
+end
+</pre>

@@ -1,0 +1,93 @@
+
+<h2>Real use case examples</h2>
+
+<h3>Projects using Oli</h3>
+
+<ul>
+  <li><a href="https://github.com/h2non/buildspec">Buildspec</a></li>
+  <li><a href="http://github.com/h2non/nar">nar</a></li>
+</ul>
+
+<h3>Markup templating</h3>
+<pre class="language-ruby" highlight>
+!DOCTYPE html
+html:
+  head:
+    &amp;title: Welcome to Oli!
+  end
+  body:
+    # i'm using a reference that points to 'title'
+    h1:> title 
+    # this is a in-line comment!
+    div(class: container, id: main):
+      p(class: main-title another-class): This is a paragraph
+      a(href: 'http://h2non.github.io/oli', title: click here!): Oli Spec
+    end
+  end
+end
+</pre>
+
+<h3>Package manifest file</h3>
+<pre class="language-ruby" highlight>
+name: oli
+version: 0.1.0
+description: Oli language parser for node.js
+homepage > repository url: 'http://github.com/h2non/oli.js.git'
+bugs: 'https://github.com/h2non/oli.js/issues'
+author: name: Tomas Aparicio
+licenses: MIT
+main: lib/oli
+directories: lib: ./lib
+bin: oli: ./bin/oli
+engines: node: >= 0.8.0
+scripts: test: grunt test
+keywords: parser, ast ,language
+
+repository:
+  type: git
+  url:> repository url
+end
+
+dependencies:
+  pegjs: ~0.8.0
+end
+devDependencies:
+  grunt-mocha-cli: ~1.0.3
+  matchdep: ~0.1.2
+  chai: ~1.8.1
+  suppose: ~0.3.0
+  sinon: ~1.7.3
+end
+</pre>
+
+<h3>Data interchange format</h3>
+<pre class="language-ruby" highlight>
+# hidden values
+!schema url: 'http://schema.org/'
+
+name: The Empire State Building
+description: The Empire State Building is a 102-story landmark in New York City.
+image: 'http://bit.ly/1hXoBhd'
+context:
+  name: *{schema url}/name
+  description: *{schema url}/description
+  image:
+    id: *{schema url}/image
+    type: @id
+  end
+  geo: *{schema url}/geo
+  latitude:
+    id: *{schema url}/latitude
+    type > float: 'xsd:float'
+  end
+  longitude:
+    id: *{schema url}/longitude
+    type:> float
+  end
+  xsd: 'http://www.w3.org/2001/XMLSchema'
+end
+geo:
+  latitude: 40.75
+  longitude: 73.98
+end
+</pre>
