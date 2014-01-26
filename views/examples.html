@@ -10,14 +10,14 @@
 
 <h3>Markup templating</h3>
 <pre class="language-ruby" highlight>
-!DOCTYPE html
+!!!
 html:
   head:
-    &amp;title: Welcome to Oli!
+    @title: Welcome to Oli!
   end
   body:
     # i'm using a reference that points to 'title'
-    h1:> title 
+    h1: &amp;{title} 
     # this is a in-line comment!
     div(class: container, id: main):
       p(class: main-title another-class): This is a paragraph
