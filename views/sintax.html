@@ -1,5 +1,57 @@
 <h2>Sintax Overview</h2>
 
+<h3>Boolean</h3>
+<pre class="language-ruby" highlight>
+true
+yes # semantic alias to true
+false
+no # this one to false
+</pre>
+
+<h3>Numbers</h3>
+<pre class="language-ruby" highlight>
+1234
+12.32934 # numbers can have decimal part
+-46.01 # or it can be signed
+</pre>
+
+<h3>Strings</h3>
+<pre class="language-ruby" highlight>
+strings literals can be anquoted 
+'and this one is quoted'
+"and it can be also double quoted"
+</pre>
+
+<h3>Blocks</h3>
+<pre class="language-ruby" highlight>
+# in-line blocks expressions
+hello: world!
+# nested
+it: has: a: 'pretty sintax'
+# multi-line blocks
+oli rules!:
+  yes # parsed as boolean
+  I agree # parsed as string
+end
+</pre>
+
+<h3>Lists</h3>
+<pre class="language-ruby" highlight>
+# implicit lists ussing the comma token separator
+hello: world, from, oli! 
+# it can be multi line also
+hello:
+  world
+  from
+  oli!
+end
+# or explicit using brackets
+hello: [ 
+  oli, 'says', hello, 1234
+]
+</pre>
+
+<h2>Featured Example</h2>
 <pre class="language-ruby" highlight>
 # this a is a comment
 name: Hello Oli!
