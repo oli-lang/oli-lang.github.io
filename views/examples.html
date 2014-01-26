@@ -69,19 +69,19 @@ name: The Empire State Building
 description: The Empire State Building is a 102-story landmark in New York City.
 image: 'http://bit.ly/1hXoBhd'
 context:
-  name: *{schema url}/name
-  description: *{schema url}/description
+  name: &amp;{schema url}/name
+  description: &amp;{schema url}/description
   image:
-    id: *{schema url}/image
+    id: &amp;{schema url}/image
     type: @id
   end
-  geo: *{schema url}/geo
+  geo: &amp;{schema url}/geo
   latitude:
-    id: *{schema url}/latitude
+    id: &amp;{schema url}/latitude
     type > float: 'xsd:float'
   end
   longitude:
-    id: *{schema url}/longitude
+    id: &amp;{schema url}/longitude
     type:> float
   end
   xsd: 'http://www.w3.org/2001/XMLSchema'

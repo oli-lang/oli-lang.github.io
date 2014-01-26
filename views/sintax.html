@@ -107,14 +107,14 @@ non existence: void
 deploy:> hera
 
 # short-hand reference declaration operator
-&amp;flags: --debug --trace
+@flags: --debug --trace
 # hidden variable in compilation output 
-!&amp;verbose: --verbose
+!@verbose: --verbose
 
 # templating
-command: server.sh start *{flags}
+command: server.sh start &amp;{flags}
 # math expressions
-&amp;fallback port: <[ *{flags} + 100 ]>
+fallback port: <[ &amp;{flags} + 100 ]>
 
 # multi-line unquoted string
 log:
