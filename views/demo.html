@@ -1,0 +1,28 @@
+<h2>Online demo</h2>
+
+<div ng-controller="ParserDemoCtrl">
+
+  <div class="row">
+    <div class="col-md-8">
+      <textarea class="form-control" rows="8" ng-model='exampleCode'></textarea>
+    </div>
+    <div class="col-md-4">
+       <button type="button" class="btn btn-primary btn-lg">Compile</button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs">
+        <li ng-class="{ active: tab == 'result'}" ng-click="tab = 'result'"><a>Result</a></li>
+        <li ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
+        <li ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
+      </ul>
+
+      <pre class="language-ruby line-numbers" ng-show="tab == 'result'" highlight ng-model="output">{{output}}</pre>
+    </div>
+  </div>
+
+</div>

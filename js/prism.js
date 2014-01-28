@@ -15,3 +15,28 @@ Prism.languages.python={comment:{pattern:/(^|[^\\])#.*?(\r?\n|$)/g,lookbehind:!0
 Prism.languages.ruby=Prism.languages.extend("clike",{comment:/#[^\r\n]*(\r?\n|$)/g,keyword:/\b(alias|and|BEGIN|begin|break|case|class|def|define_method|defined|do|each|else|elsif|END|end|ensure|false|for|if|in|module|new|next|nil|not|or|raise|redo|require|rescue|retry|return|self|super|then|throw|true|undef|unless|until|when|while|yield)\b/g,builtin:/\b(Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File|Stat|File|Fixnum|Fload|Hash|Integer|IO|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|String|Struct|TMS|Symbol|ThreadGroup|Thread|Time|TrueClass)\b/,constant:/\b[A-Z][a-zA-Z_0-9]*[?!]?\b/g});Prism.languages.insertBefore("ruby","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:true},variable:/[@$&]+\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g,symbol:/:\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g})
 ;
 Prism.languages.gherkin={comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|((#)|(\/\/)).*?(\r?\n|$))/g,lookbehind:true},string:/("|')(\\?.)*?\1/g,atrule:/\b(And|Given|When|Then|In order to|As an|I want to|As a)\b/g,keyword:/\b(Scenario Outline|Scenario|Feature|Background|Story)\b/g};
+
+Prism.hooks.add('after-highlight', function (env) {
+  // works only for <code> wrapped inside <pre data-line-numbers> (not inline)
+  var pre = env.element.parentNode;
+  if (!pre || !/pre/i.test(pre.nodeName) || pre.className.indexOf('line-numbers') === -1) {
+    return;
+  }
+
+  var linesNum = (1 + env.code.split('\n').length);
+  var lineNumbersWrapper;
+
+  lines = new Array(linesNum);
+  lines = lines.join('<span></span>');
+
+  lineNumbersWrapper = document.createElement('span');
+  lineNumbersWrapper.className = 'line-numbers-rows';
+  lineNumbersWrapper.innerHTML = lines;
+
+  if (pre.hasAttribute('data-start')) {
+    pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+  }
+
+  env.element.appendChild(lineNumbersWrapper);
+
+});
