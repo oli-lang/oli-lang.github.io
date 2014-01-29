@@ -84,3 +84,7 @@ body {
 .no-link:hover, .no-link:focus {
   text-decoration: none;
 }
+
+.pointer {
+  cursor: pointer;
+}

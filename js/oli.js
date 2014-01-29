@@ -10,7 +10,10 @@ angular.module('oli', ['ngRoute'])
         templateUrl: 'views/examples.html'
       });
       $routeProvider.when('/demo', {
-        templateUrl: 'views/demo.html'
+        templateUrl: 'views/parser.html'
+      });
+      $routeProvider.when('/parser', {
+        templateUrl: 'views/parser.html'
       });
       $routeProvider.otherwise({
         redirectTo: '/',
@@ -19,15 +22,26 @@ angular.module('oli', ['ngRoute'])
     }
   ])
   
-  .directive('highlight', function() {
-    return function(scope, element, attrs) {
-      element.html(Prism.highlight(element.text(), Prism.languages.ruby));
+  .factory('PrismHighlight', function () {
+    return function (code) {
+      return Prism.highlight(code, Prism.languages.ruby);
     };
   })
 
-  .controller('ParserDemoCtrl', function ($scope) {
+  .directive('highlight', function(PrismHighlight) {
+    return function(scope, element, attrs) {
+      element.html(PrismHighlight(element.text()));
+    };
+  })
+
+  .controller('ParserDemoCtrl', function ($scope, CodeExamples) {
       
     $scope.tab = 'result'
+    $scope.examples = CodeExamples
+
+    $scope.setCode = function (code) {
+      $scope.exampleCode = code;
+    };
 
     $scope.exampleCode = [
       '@name: Oli!',
@@ -57,4 +71,21 @@ angular.module('oli', ['ngRoute'])
       'end'
     ].join('\n');
 
+  })
+
+  .factory('CodeExamples', function () {
+    function join(arr) { 
+      return arr.join('\n');
+    }
+
+    return {
+      'package.oli': join([
+        'name: my-package',
+        'version: 0.1.2',
+        'author: John <me@mail.com>'
+      ]),
+      'manifest': join([
+        'output: /var/log/info.log'
+      ])
+    }
   });
