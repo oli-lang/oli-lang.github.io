@@ -1,0 +1,35 @@
+<h2>Online Parser</h2>
+
+<div ng-controller="ParserDemoCtrl">
+
+  <div class="row">
+    <div class="col-md-8">
+      <textarea class="form-control" rows="14" ng-model='exampleCode'></textarea>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-success btn-primary btn-sm">Parse</button>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="setCode('')">Clear</button>
+      <hr />
+      <h4>Code Examples</h4>
+      <div class="list-group">
+        <a class="list-group-item pointer" ng-repeat="(name, code) in examples" ng-click="setCode(code)">
+          {{name}}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs">
+        <li class="pointer" ng-class="{ active: tab == 'result'}" ng-click="tab = 'result'"><a>Output</a></li>
+        <li class="pointer" ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
+        <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
+      </ul>
+      <pre class="language-ruby line-numbers" ng-show="tab == 'result'" highlight ng-model="output">{{output}}</pre>
+    </div>
+  </div>
+
+</div>
