@@ -28,7 +28,9 @@
         <li class="pointer" ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
         <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
       </ul>
-      <pre class="language-ruby line-numbers" ng-show="tab == 'result'" highlight ng-model="output">{{output}}</pre>
+      <pre highlight class="language-ruby line-numbers" ng-show="tab == 'result'" ng-model="output"></pre>
+      <pre highlight class="language-ruby" ng-show="tab == 'ast'" ng-model="ast"></pre>
+      <pre highlight class="language-ruby" ng-show="tab == 'tokens'" ng-model="tokens"></pre>
     </div>
   </div>
 
