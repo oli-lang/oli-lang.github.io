@@ -112,8 +112,8 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       }
 
       function formatWhiteSpaces(str) {
-        return str.replace(/\<\/span\>(\s+)\S/g, function (match) {
-          return match.replace(/\s/g, '&nbsp;'); 
+        return str.replace(/\>[0-9]+(\s+)\S|\<\/span\>(\s+)\S/g, function (match) {
+          return match.replace(/\s/g, '&nbsp;&nbsp;');
         });
       }
     };
