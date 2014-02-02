@@ -55,8 +55,23 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.tab = 'result'
     $scope.examples = [ 'manifest.oli' ]
 
+    $scope.code = $location.search().code || [
+      'name: Oli!',
+      'type: language',
+      'version: 0.1',
+      'features:',
+      '  string interpolation: yes',
+      '  templating: yes',
+      'end'
+    ].join('\n');
+
     $scope.setCode = function (index) {
       $scope.code = Oli.scripts[index].source;
+    };
+
+    $scope.url = function () {
+      $location.search('code', $scope.code)
+      $location.search('parse', true)
     };
 
     $scope.parse = function () {
@@ -88,16 +103,10 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       $scope.error = null
     };
 
-    $scope.code = $location.search().code || [
-      'name: Oli!',
-      'type: language',
-      'version: 0.1',
-      'features:',
-      '  string interpolation: yes',
-      '  templating: yes',
-      'end'
-    ].join('\n');
-
+    // automatically parse on page load
+    if ($location.search().parse) {
+      $scope.parse();
+    }
   })
 
   .factory('Oli', function () {

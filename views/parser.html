@@ -1,4 +1,4 @@
-<h3>Online Parser</h3>
+<h4>Online Parser</h4>
 
 <div ng-controller="ParserDemoCtrl">
 
@@ -7,7 +7,7 @@
       <textarea class="form-control" rows="14" ng-model='code'></textarea>
     </div>
     <div class="col-md-4">
-      <h4>Examples</h4>
+      <h5>Examples</h5>
       <div class="list-group">
         <a class="list-group-item pointer" ng-repeat="name in examples" ng-click="setCode($index)">
           {{name}}
@@ -15,6 +15,7 @@
       </div>
       <button ng-click="parse()" type="button" class="btn btn-success btn-primary btn-sm">Parse</button>
       <button type="button" class="btn btn-primary btn-sm" ng-click="clean()">Clean</button>
+      <button type="button" class="btn btn-info btn-sm" ng-click="url()">URL</button>
     </div>
   </div>
 

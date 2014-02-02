@@ -26,7 +26,7 @@ body {
 
 /* Custom page footer */
 .footer {
-  margin-top: 19px;
+  margin-top: 28px;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
@@ -96,7 +96,7 @@ textarea.form-control {
 
 .errorLines {
   background: #faebcc;
-  margin: 10px;
+  margin: 10px 0 3px;
 }
 
 pre {
