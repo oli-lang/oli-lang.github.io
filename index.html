@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Oli, a minimal language for humans">
     <link rel="shortcut icon" href="images/favicon.ico">
-
     <title>Oli - Minimal Language</title>
-
+    <!-- StyleSheets -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/oli.css" rel="stylesheet">
     <link href="css/prism.css" rel="stylesheet">
@@ -36,15 +35,16 @@
         <p>Brought to the world by <a href="https://github.com/oli-lang/oli#authors">geeks</a> with obsession and caffeine
         <span class="pull-right"><a href="https://github.com/oli-lang">Github</a> | <a href="https://github.com/oli-lang/oli#contributing">Contributing</a></span></p>
       </div>
-
-      <a href="https://github.com/oli-lang/oli"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
     </div>
+
+    <a href="https://github.com/oli-lang/oli"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/angular.route.min.js"></script>
-    <script type="text/javascript" src="js/prism.js"></script>
+    <script type="text/javascript" src="js/angular.sanitize.min.js"></script>
     <script type="text/javascript" src="js/oli.js"></script>
-    <script type="text/javascript" src="http://rawgithub.com/oli-lang/oli-js/master/oli.js"></script>
+    <script type="text/javascript" src="js/prism.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -53,5 +53,9 @@
       ga('create', 'UA-47598213-1', 'oli-lang.org');
       ga('send', 'pageview');
     </script>
+
+    <!-- Oli source examples -->
+    <script type="text/oli" src="examples/manifest.oli"></script>
+
   </body>
 </html>

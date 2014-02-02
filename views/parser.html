@@ -9,27 +9,36 @@
     <div class="col-md-4">
       <h4>Examples</h4>
       <div class="list-group">
-        <a class="list-group-item pointer" ng-repeat="(name, code) in examples" ng-click="setCode(code)">
+        <a class="list-group-item pointer" ng-repeat="name in examples" ng-click="setCode($index)">
           {{name}}
         </a>
       </div>
       <button ng-click="parse()" type="button" class="btn btn-success btn-primary btn-sm">Parse</button>
-      <button type="button" class="btn btn-primary btn-sm" ng-click="setCode('')">Clear</button>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="clean()">Clean</button>
     </div>
   </div>
 
-  <hr />
-
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-tabs">
-        <li class="pointer" ng-class="{ active: tab == 'result'}" ng-click="tab = 'result'"><a>Output</a></li>
-        <li class="pointer" ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
-        <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
-      </ul>
-      <pre highlight class="language-ruby line-numbers" ng-show="tab == 'result'" ng-model="output"></pre>
-      <pre highlight class="language-ruby" ng-show="tab == 'ast'" precode="ast"></pre>
-      <pre highlight class="language-ruby" ng-show="tab == 'tokens'" precode="tokens"></pre>
+  <div ng-show="ast || error">
+    <hr />
+    <div class="row">
+      <div class="col-md-12">
+        <div ng-show="error">
+          <div class="alert alert-danger">
+            {{error.fullMessage}}
+            <blockquote class="errorLines" ng-bind-html="errorLines"></blockquote> 
+          </div>
+        </div>
+        <div ng-show="!error">
+          <ul class="nav nav-tabs">
+            <li class="pointer" ng-class="{ active: tab == 'result'}" ng-click="tab = 'result'"><a>Output</a></li>
+            <li class="pointer" ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
+            <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
+          </ul>
+          <pre highlight class="language-javascript" ng-show="tab == 'result'" precode="output"></pre>
+          <pre highlight class="language-javascript" ng-show="tab == 'ast'" precode="ast"></pre>
+          <pre highlight class="language-javascript" ng-show="tab == 'tokens'" precode="tokens"></pre>
+        </div>
+      </div>
     </div>
   </div>
 
