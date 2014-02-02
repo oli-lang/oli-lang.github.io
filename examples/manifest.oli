@@ -1,7 +1,0 @@
-name: Oli!
-type: language
-version: 1.0.4
-features:
-  string interpolation: yes
-  templating: yes
-end

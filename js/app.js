@@ -36,24 +36,47 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
 
   .directive('precode', function() {
     return function(scope, element, attrs) {
-      
-      function bindNode(text) {
-        element.html(scope[attrs.precode]);
-      }
-
       bindNode();
       
       scope.$watch(attrs.precode, function () {
         bindNode()
       })
+
+      function bindNode(text) {
+        element.html(scope[attrs.precode]);
+      }
     }
+  })
+
+  .directive('codeEditor', function() {
+    return function(scope, element, attrs) {
+      var codeMirror = CodeMirror(element[0], {
+        value: scope[attrs.source],
+        mode:  "ruby",
+        tabSize: 2,
+        lineNumbers: true
+      })
+  
+      codeMirror.on('change', function () {
+        scope[attrs.source] = codeMirror.getValue()
+      })
+
+      scope.$watch(attrs.source, function (source) {
+        codeMirror.setValue(source)
+      })
+    };
   })
 
   .controller('ParserDemoCtrl', function ($scope, $log, $location, $sce, Oli) {
     
     $scope.error = null;
     $scope.tab = 'result'
-    $scope.examples = [ 'manifest.oli' ]
+    $scope.examples = [ 'index.oli', 'package.oli', 'products.oli' ]
+
+    $scope.options = {
+      loc: false,
+      comments: false
+    };
 
     $scope.code = $location.search().code || [
       'name: Oli!',
@@ -78,9 +101,9 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       if (!$scope.code.length) return;
 
       try {
-        $scope.ast = JSON.stringify(Oli.ast($scope.code), null, 2);
+        $scope.ast = JSON.stringify(Oli.ast($scope.code, $scope.options), null, 2);
         $scope.output = $scope.ast;
-        $scope.tokens = JSON.stringify(Oli.tokens($scope.code), null, 2);
+        $scope.tokens = JSON.stringify(Oli.tokens($scope.code, $scope.options), null, 2);
         $scope.error = null;
       } catch (e) {
         $scope.error = e;
