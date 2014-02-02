@@ -4,16 +4,16 @@
   
   <pre class="language-ruby" highlight>
 # create a referencial value
-schema url = 'http://schema.org/'
+url = 'http://schema.org/'
 
 &amp;name: The Empire State Building
 description: *name is a 102-story in New York.
 image: 'http://bit.ly/1hXoBhd'
 context:
-  name: *{schema url}/name
+  name: *{url}/name
   image:
-    id: *{schema url}/image
-    type: landscape
+    id: *{url}/image.png
+    landscape: yes
   end
 end
 geo:
