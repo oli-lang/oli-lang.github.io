@@ -34,17 +34,37 @@ angular.module('oli', ['ngRoute'])
     };
   })
 
-  .controller('ParserDemoCtrl', function ($scope, CodeExamples) {
+  .directive('precode', function() {
+    return function(scope, element, attrs) {
+      
+      function bindNode(text) {
+        element.html(scope[attrs.precode]);
+      }
+
+      bindNode();
+      
+      scope.$watch(attrs.precode, function () {
+        bindNode()
+      })
+    }
+  })
+
+  .controller('ParserDemoCtrl', function ($scope, Oli, CodeExamples) {
       
     $scope.tab = 'result'
     $scope.examples = CodeExamples
 
     $scope.setCode = function (code) {
-      $scope.exampleCode = code;
+      $scope.code = code;
     };
 
-    $scope.exampleCode = [
-      '@name: Oli!',
+    $scope.parse = function () {
+      $scope.ast = JSON.stringify(Oli.ast($scope.code), null, 2);
+      $scope.tokens = JSON.stringify(Oli.tokens($scope.code), null, 2);
+    };
+
+    $scope.code = [
+      'name: Oli!',
       'type: language',
       'version: 0.1',
       'features:',
@@ -73,6 +93,10 @@ angular.module('oli', ['ngRoute'])
 
   })
 
+  .factory('Oli', function () {
+    return window.oli;
+  })
+
   .factory('CodeExamples', function () {
     function join(arr) { 
       return arr.join('\n');
@@ -84,7 +108,7 @@ angular.module('oli', ['ngRoute'])
         'version: 0.1.2',
         'author: John <me@mail.com>'
       ]),
-      'manifest': join([
+      'manifest.oli': join([
         'output: /var/log/info.log'
       ])
     }

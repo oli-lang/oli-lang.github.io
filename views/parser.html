@@ -1,21 +1,20 @@
-<h2>Online Parser</h2>
+<h3>Online Parser</h3>
 
 <div ng-controller="ParserDemoCtrl">
 
   <div class="row">
     <div class="col-md-8">
-      <textarea class="form-control" rows="14" ng-model='exampleCode'></textarea>
+      <textarea class="form-control" rows="14" ng-model='code'></textarea>
     </div>
     <div class="col-md-4">
-      <button type="button" class="btn btn-success btn-primary btn-sm">Parse</button>
-      <button type="button" class="btn btn-primary btn-sm" ng-click="setCode('')">Clear</button>
-      <hr />
-      <h4>Code Examples</h4>
+      <h4>Examples</h4>
       <div class="list-group">
         <a class="list-group-item pointer" ng-repeat="(name, code) in examples" ng-click="setCode(code)">
           {{name}}
         </a>
       </div>
+      <button ng-click="parse()" type="button" class="btn btn-success btn-primary btn-sm">Parse</button>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="setCode('')">Clear</button>
     </div>
   </div>
 
@@ -29,8 +28,8 @@
         <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
       </ul>
       <pre highlight class="language-ruby line-numbers" ng-show="tab == 'result'" ng-model="output"></pre>
-      <pre highlight class="language-ruby" ng-show="tab == 'ast'" ng-model="ast"></pre>
-      <pre highlight class="language-ruby" ng-show="tab == 'tokens'" ng-model="tokens"></pre>
+      <pre highlight class="language-ruby" ng-show="tab == 'ast'" precode="ast"></pre>
+      <pre highlight class="language-ruby" ng-show="tab == 'tokens'" precode="tokens"></pre>
     </div>
   </div>
 

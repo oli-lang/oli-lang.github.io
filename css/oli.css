@@ -88,3 +88,12 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+textarea.form-control {
+  font-size: 14px;
+}
+
+pre {
+  max-height: 500px;
+  overflow: auto;
+}
