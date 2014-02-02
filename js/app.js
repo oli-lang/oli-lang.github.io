@@ -49,7 +49,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     }
   })
 
-  .controller('ParserDemoCtrl', function ($scope, $log, $sce, Oli) {
+  .controller('ParserDemoCtrl', function ($scope, $log, $location, $sce, Oli) {
     
     $scope.error = null;
     $scope.tab = 'result'
@@ -88,7 +88,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       $scope.error = null
     };
 
-    $scope.code = [
+    $scope.code = $location.search().code || [
       'name: Oli!',
       'type: language',
       'version: 0.1',
