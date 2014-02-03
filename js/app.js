@@ -9,7 +9,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       $routeProvider.when('/examples', {
         templateUrl: 'views/examples.html'
       });
-      $routeProvider.when('/demo', {
+      $routeProvider.when('/try', {
         templateUrl: 'views/parser.html'
       });
       $routeProvider.when('/parser', {
@@ -71,7 +71,13 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     
     $scope.error = null;
     $scope.tab = 'result'
-    $scope.examples = [ 'index.oli', 'package.oli', 'products.oli' ]
+    $scope.examples = [ 
+      'HTML markup', 
+      'Package manifest', 
+      'Product list', 
+      'Test DSL', 
+      'Data types' 
+    ]
 
     $scope.options = {
       loc: false,
@@ -81,10 +87,18 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.code = $location.search().code || [
       'name: Oli!',
       'type: language',
-      'version: 0.1',
+      'category: ',
+      ' | - minimalist, markup-like',
+      'version: 0.1.0',
+      'open spec: yes',
+      'license: MIT',
+      'homepage: "http://oli-lang.org"',
       'features:',
       '  string interpolation: yes',
       '  templating: yes',
+      '  data references: yes',
+      '  data clone: yes',
+      '  elegant: yes',
       'end'
     ].join('\n');
 
@@ -107,12 +121,12 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
         $scope.error = null;
       } catch (e) {
         $scope.error = e;
-        $scope.errorLines = $sce.trustAsHtml(formatWhiteSpaces(e.errorLines))
+        $scope.errorLines = $sce.trustAsHtml(formatWhiteSpaces(e.errorLines.join('<br />')))
         $log.error(e);
       }
 
       function formatWhiteSpaces(str) {
-        return str.replace(/\>[0-9]+(\s+)\S|\<\/span\>(\s+)\S/g, function (match) {
+        return str.replace(/\<\/span\>(\s+)\S/g, function (match) {
           return match.replace(/\s/g, '&nbsp;&nbsp;');
         });
       }
