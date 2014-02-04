@@ -5,45 +5,45 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     function($routeProvider) {
       $routeProvider.when('/sintax', {
         templateUrl: 'views/sintax.html'
-      });
+      })
       $routeProvider.when('/examples', {
         templateUrl: 'views/examples.html'
-      });
+      })
       $routeProvider.when('/try', {
         templateUrl: 'views/parser.html'
-      });
+      })
       $routeProvider.when('/parser', {
         templateUrl: 'views/parser.html'
-      });
+      })
       $routeProvider.otherwise({
         redirectTo: '/',
         templateUrl: 'views/main.html'
-      });
+      })
     }
   ])
   
   .factory('PrismHighlight', function () {
     return function (code) {
-      return Prism.highlight(code, Prism.languages.ruby);
-    };
+      return Prism.highlight(code, Prism.languages.ruby)
+    }
   })
 
   .directive('highlight', function(PrismHighlight) {
     return function(scope, element, attrs) {
-      element.html(PrismHighlight(element.text()));
-    };
+      element.html(PrismHighlight(element.text()))
+    }
   })
 
   .directive('precode', function() {
     return function(scope, element, attrs) {
-      bindNode();
+      bindNode()
       
       scope.$watch(attrs.precode, function () {
         bindNode()
       })
 
       function bindNode(text) {
-        element.html(scope[attrs.precode]);
+        element.html(scope[attrs.precode])
       }
     }
   })
@@ -64,12 +64,12 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       scope.$watch(attrs.source, function (source) {
         codeMirror.setValue(source)
       })
-    };
+    }
   })
 
   .controller('ParserDemoCtrl', function ($scope, $log, $location, $sce, Oli) {
     
-    $scope.error = null;
+    $scope.error = null
     $scope.tab = 'result'
     $scope.examples = [ 
       'HTML markup', 
@@ -82,7 +82,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.options = {
       loc: false,
       comments: false
-    };
+    }
 
     $scope.code = $location.search().code || [
       'name: Oli!',
@@ -100,35 +100,35 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       '  data clone: yes',
       '  elegant: yes',
       'end'
-    ].join('\n');
+    ].join('\n')
 
     $scope.setCode = function (index) {
-      $scope.code = Oli.scripts[index].source;
-    };
+      $scope.code = Oli.scripts[index].source
+    }
 
     $scope.url = function () {
       $location.search('code', $scope.code)
       $location.search('parse', true)
-    };
+    }
 
     $scope.parse = function () {
-      if (!$scope.code.length) return;
+      if (!$scope.code.length) return
 
       try {
-        $scope.ast = JSON.stringify(Oli.ast($scope.code, $scope.options), null, 2);
-        $scope.output = $scope.ast;
-        $scope.tokens = JSON.stringify(Oli.tokens($scope.code, $scope.options), null, 2);
-        $scope.error = null;
+        $scope.ast = JSON.stringify(Oli.ast($scope.code, $scope.options), null, 2)
+        $scope.output = JSON.stringify(Oli.parse($scope.code, $scope.options), null, 2)
+        $scope.tokens = $scope.output
+        $scope.error = null
       } catch (e) {
-        $scope.error = e;
+        $scope.error = e
         $scope.errorLines = $sce.trustAsHtml(formatWhiteSpaces(e.errorLines.join('<br />')))
-        $log.error(e);
+        $log.error(e)
       }
 
       function formatWhiteSpaces(str) {
         return str.replace(/\<\/span\>(\s+)\S/g, function (match) {
-          return match.replace(/\s/g, '&nbsp;&nbsp;');
-        });
+          return match.replace(/\s/g, '&nbsp;&nbsp;')
+        })
       }
     };
 
@@ -138,14 +138,14 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       $scope.output = ''
       $scope.code = ''
       $scope.error = null
-    };
+    }
 
     // automatically parse on page load
     if ($location.search().parse) {
-      $scope.parse();
+      $scope.parse()
     }
   })
 
   .factory('Oli', function () {
-    return window.oli;
+    return window.oli
   })
