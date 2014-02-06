@@ -103,3 +103,7 @@ pre {
   max-height: 500px;
   overflow: auto;
 }
+
+.CodeMirror {
+  height: 365px !important;
+}

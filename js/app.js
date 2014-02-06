@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('oli', ['ngRoute', 'ngSanitize'])
+  
   .config(['$routeProvider',
     function($routeProvider) {
       $routeProvider.when('/sintax', {
@@ -26,6 +27,10 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     return function (code) {
       return Prism.highlight(code, Prism.languages.ruby)
     }
+  })
+
+  .factory('Oli', function () {
+    return window.oli
   })
 
   .directive('highlight', function(PrismHighlight) {
@@ -76,12 +81,13 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       'Package manifest', 
       'Product list', 
       'Test DSL', 
-      'Data types' 
+      'Data types'
     ]
 
     $scope.options = {
       loc: false,
-      comments: false
+      comments: false,
+      meta: true
     }
 
     $scope.code = $location.search().code || [
@@ -152,8 +158,4 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     if ($location.search().parse) {
       $scope.parse()
     }
-  })
-
-  .factory('Oli', function () {
-    return window.oli
   })
