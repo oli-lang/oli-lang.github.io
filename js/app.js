@@ -115,14 +115,22 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       if (!$scope.code.length) return
 
       try {
-        $scope.ast = JSON.stringify(Oli.ast($scope.code, $scope.options), null, 2)
-        $scope.output = JSON.stringify(Oli.parse($scope.code, $scope.options), null, 2)
-        $scope.tokens = $scope.output
+        $scope.ast = doOli('ast')
+        $scope.output = doOli('parse')
+        $scope.tokens = doOli('tokens')
         $scope.error = null
       } catch (e) {
         $scope.error = e
-        $scope.errorLines = $sce.trustAsHtml(formatWhiteSpaces(e.errorLines.join('<br />')))
+        $scope.errorLines = formatErrorLines(e.errorLines)
         $log.error(e)
+      }
+
+      function doOli(action) {
+        return JSON.stringify(Oli[action]($scope.code, $scope.options), null, 2)
+      } 
+
+      function formatErrorLines(errorLines) {
+        return $sce.trustAsHtml(formatWhiteSpaces(errorLines.join('<br />')))
       }
 
       function formatWhiteSpaces(str) {

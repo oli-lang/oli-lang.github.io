@@ -3,23 +3,56 @@
 <h3>Boolean</h3>
 <pre class="language-ruby" highlight>
 true
-yes # semantic alias to true
 false
-no # this one to false
+# equivalent semantic aliases
+yes
+no 
 </pre>
 
 <h3>Numbers</h3>
 <pre class="language-ruby" highlight>
-1234
-12.32934 # numbers can have decimal part
--46.01 # or it can be signed
+2014
+3.141592 # numbers can have decimal part
+-46.01 # also it can be signed
+0xFFF # or hexadecimal expressions prefixed with "0x"
 </pre>
 
 <h3>Strings</h3>
 <pre class="language-ruby" highlight>
-strings literals can be anquoted 
-'and this one is quoted'
-"and it can be also double quoted"
+strings literals can be unquoted
+'and wrapped with quotes'
+"or with double quotes"
+</pre>
+
+<h3>Lists</h3>
+<pre class="language-ruby" highlight>
+# in-line lists using the dash separator
+hello: - world, from, oli! 
+# it can be multi line also
+hello:
+  world
+  from
+  oli!
+end
+# or explicit using brackets
+hello: [ 
+  oli, 'says'
+  yes, 12.34
+]
+</pre>
+
+<h3>Assignment</h3>
+<pre class="language-ruby" highlight>
+# single value assignment
+hello: world!
+# in-line nested assignment
+it: has: a: Cool! I really like it
+# primitives types assignment
+boolean: yes
+string: 'oli rules!'
+number: 3.141592
+# or lists
+list: [ 1, 2, 3 ]
 </pre>
 
 <h3>Blocks</h3>
@@ -38,20 +71,29 @@ oli rules!:
 end
 </pre>
 
-<h3>Lists</h3>
+<h3>Comments</h3>
 <pre class="language-ruby" highlight>
-# implicit lists ussing the comma token separator
-hello: world, from, oli! 
-# it can be multi line also
-hello:
-  world
-  from
-  oli!
+# you can use single-line comment
+hello: oli! # on any part of the source
+## 
+  or multiple lines
+##
+name: 
+  oli is
+  ## and interpolated ##
+  simple!
 end
-# or explicit using brackets
-hello: [ 
-  oli, 'says', yes, 12.34
-]
+</pre>
+
+<h3>References</h3>
+<pre class="language-ruby" highlight>
+# you can create references with "&amp;" operator
+&amp;hello: oli!
+name: 
+  oli is
+  ## and interpolated ##
+  simple!
+end
 </pre>
 
 <h2>Featured Example</h2>
