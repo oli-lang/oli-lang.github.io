@@ -53,6 +53,9 @@ string: 'oli rules!'
 number: 3.141592
 # or lists
 list: [ 1, 2, 3 ]
+# you can create values which are
+# not present in the compilation output
+value = this is a document hidden value
 </pre>
 
 <h3>Blocks</h3>
@@ -94,7 +97,7 @@ name: *name is simple!
 # another valid reference expressions
 value: *{name} or *'name'
 # any type of expression in the document can consume a reference
-*hello: it says "hello world in *oli"
+*hello: it says "hello world in *hello"
 </pre>
 
 <h2>Featured Example</h2>
