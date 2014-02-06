@@ -127,7 +127,9 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
         $scope.error = null
       } catch (e) {
         $scope.error = e
-        $scope.errorLines = formatErrorLines(e.errorLines)
+        if (e.errorLines) {
+          $scope.errorLines = formatErrorLines(e.errorLines)
+        }
         $log.error(e)
       }
 

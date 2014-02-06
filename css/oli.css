@@ -107,3 +107,11 @@ pre {
 .CodeMirror {
   height: 365px !important;
 }
+
+.powered {
+  position: relative;
+  float: left;
+  bottom: 392px;
+  left: 122px;
+  font-size: 12px;
+}

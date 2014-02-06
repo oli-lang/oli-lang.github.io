@@ -97,7 +97,9 @@ name: *name is simple!
 # another valid reference expressions
 value: *{name} or *'name'
 # any type of expression in the document can consume a reference
-*hello: it says "hello world in *hello"
+hello: it says "hello world in *hello"
+# single quotes strings cannot allow interpolated data references
+hello: '*hello world' # will be compiled as '*hello world'
 </pre>
 
 <h2>Featured Example</h2>
