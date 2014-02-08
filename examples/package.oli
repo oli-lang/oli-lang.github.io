@@ -12,9 +12,9 @@ repository:
   url: *repoUrl
 end
 
-main: lib/oli
+main: ./oli
 directories: lib: ./lib
-bin: oli: ./bin/oli
+bin: oli: ./bin
 engines: node: >= 0.8.0
 
 keywords:
