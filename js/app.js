@@ -4,8 +4,8 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
   
   .config(['$routeProvider',
     function($routeProvider) {
-      $routeProvider.when('/sintax', {
-        templateUrl: 'views/sintax.html'
+      $routeProvider.when('/syntax', {
+        templateUrl: 'views/syntax.html'
       })
       $routeProvider.when('/examples', {
         templateUrl: 'views/examples.html'
