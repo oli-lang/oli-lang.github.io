@@ -45,7 +45,7 @@
         <div ng-show="error">
           <div class="alert alert-danger">
             {{error.fullMessage}}
-            <blockquote class="errorLines" ng-bind-html="errorLines"></blockquote> 
+            <blockquote class="errorLines" ng-bind-html="errorLines" ng-show="errorLines"></blockquote> 
           </div>
         </div>
         <div ng-show="!error">
