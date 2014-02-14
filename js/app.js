@@ -110,6 +110,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
 
     $scope.setCode = function (index) {
       $scope.ast = null
+      $scope.error = null
       $scope.code = Oli.scripts[index].source
     }
 
