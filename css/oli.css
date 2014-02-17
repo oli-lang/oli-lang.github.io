@@ -105,13 +105,13 @@ pre {
 }
 
 .CodeMirror {
-  height: 365px !important;
+  height: 390px !important;
 }
 
 .powered {
   position: relative;
   float: left;
-  bottom: 392px;
+  bottom: 418px;
   left: 122px;
   font-size: 12px;
 }

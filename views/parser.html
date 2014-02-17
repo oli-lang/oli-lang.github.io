@@ -4,7 +4,7 @@
  
   <div class="row">
     <div class="col-md-8">
-      <div code-editor source="code"></div>
+      <div code-editor source="code" update="codeFile" repl="options"></div>
       <div class="powered"><small>powered by <a href="https://github.com/oli-lang/oli-js">oli.js</small></a></div>
     </div>
     <div class="col-md-4">
@@ -32,6 +32,11 @@
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="options.meta">Include meta data
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="options.repl">REPL mode
           </label>
         </div>
       </div>

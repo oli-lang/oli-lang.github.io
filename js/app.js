@@ -63,11 +63,26 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       })
   
       codeMirror.on('change', function () {
-        scope[attrs.source] = codeMirror.getValue()
+        try {
+          if (scope[attrs.repl].repl) {
+            scope.$apply(function () {
+              scope[attrs.source] = codeMirror.getValue()
+            })
+          } else {
+            scope[attrs.source] = codeMirror.getValue()
+          }
+        } catch (e) {}
       })
 
+      scope.$watch(attrs.update, function (source) {
+        if (source) {
+          codeMirror.setValue(source)
+        }
+      })
       scope.$watch(attrs.source, function (source) {
-        codeMirror.setValue(source)
+        if (!scope[attrs.repl].repl) {
+          codeMirror.setValue(source)
+        }
       })
     }
   })
@@ -75,8 +90,9 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
   .controller('ParserDemoCtrl', function ($scope, $log, $location, $sce, Oli) {
     
     $scope.error = null
+    $scope.codeFile = null
     $scope.tab = 'result'
-    $scope.examples = [ 
+    $scope.examples = [
       'HTML markup', 
       'Package manifest', 
       'Product list', 
@@ -87,7 +103,8 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.options = {
       loc: false,
       comments: false,
-      meta: true
+      meta: true,
+      repl: false
     }
 
     $scope.code = $location.search().code || [
@@ -111,7 +128,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.setCode = function (index) {
       $scope.ast = null
       $scope.error = null
-      $scope.code = Oli.scripts[index].source
+      $scope.codeFile = Oli.scripts[index].source
     }
 
     $scope.url = function () {
@@ -157,6 +174,17 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       $scope.code = ''
       $scope.error = null
     }
+
+    var unwatch
+    $scope.$watch('options', function (options) {
+      if (options.repl) {
+        unwatch = $scope.$watch('code', function () {
+          $scope.parse()
+        }, true)
+      } else if (unwatch) {
+        unwatch()
+      }
+    }, true)
 
     // automatically parse on page load
     if ($location.search().parse) {
