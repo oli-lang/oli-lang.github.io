@@ -1,4 +1,4 @@
-/*! oli.js - v0.1.0-rc.1 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-02-19 09:53 */
+/*! oli.js - v0.1.0-rc.1 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-02-20 12:46 */
 !function(e) {
   if ("object" == typeof exports) module.exports = e(); else if ("function" == typeof define && define.amd) define(e); else {
     var f;
@@ -31,87 +31,6 @@
     return s;
   }({
     1: [ function(require, module, exports) {
-      "use strict";
-      var _ = require("./helpers");
-      var mimeTypes = [ "text/oli", "text/oli-template", "application/oli" ];
-      exports = module.exports = function(oli) {
-        if (window.addEventListener != null) {
-          addEventListener("DOMContentLoaded", runScripts, false);
-        } else if (attachEvent != null) {
-          attachEvent("onload", runScripts);
-        }
-        oli.load = load;
-        function load(url, callback) {
-          var xhr = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-          xhr.open("GET", url, true);
-          if ("overrideMimeType" in xhr) {
-            xhr.overrideMimeType("text/plain");
-          }
-          xhr.onreadystatechange = function() {
-            var ref;
-            if (xhr.readyState !== xhr.DONE) {
-              return;
-            }
-            if ((ref = xhr.status) === 0 || ref === 200) {
-              callback(xhr.responseText);
-            } else {
-              throw new Error("Could not load " + url);
-            }
-          };
-          xhr.send(null);
-        }
-        function runScripts() {
-          var sources, index = 0;
-          var scripts = document.getElementsByTagName("script");
-          sources = function() {
-            var sources = [];
-            _.forEach(scripts, function(script) {
-              if (mimeTypes.indexOf(script.type) !== -1) {
-                sources.push(script);
-              }
-            });
-            return sources;
-          }();
-          execute();
-          return null;
-          function execute(src) {
-            var script = sources[index];
-            if (!script) {
-              return;
-            }
-            if (!src && script.src) {
-              load(script.src, execute);
-            } else {
-              addScript(script, src, index);
-              index += 1;
-              execute();
-            }
-          }
-        }
-        function addScript(script, src, index) {
-          oli.scripts = oli.scripts || [];
-          src = script.innerHTML || src;
-          var source = {
-            id: script.src || index,
-            filename: getFilename(script.src),
-            source: src
-          };
-          if (!script.hasAttribute("data-ignore")) {
-            source.result = oli.parse(src);
-          }
-          oli.scripts.push(source);
-          function getFilename(src) {
-            if (src) {
-              src = src.split("/").slice(-1)[0].match(/\w+\.?\w+/g)[0];
-            }
-            return src;
-          }
-        }
-      };
-    }, {
-      "./helpers": 5
-    } ],
-    2: [ function(require, module, exports) {
       "use strict";
       var Memory = require("./memory");
       var transformer = require("./transformer");
@@ -160,13 +79,105 @@
         return result;
       };
     }, {
-      "./errors": 3,
-      "./generator": 4,
-      "./helpers": 5,
-      "./memory": 6,
-      "./transformer": 10
+      "./errors": 4,
+      "./generator": 5,
+      "./helpers": 6,
+      "./memory": 7,
+      "./transformer": 11
+    } ],
+    2: [ function(require, module, exports) {
+      "use strict";
+      var _ = require("../helpers");
+      var mimeTypes = [ "text/oli", "text/oli-template", "application/oli" ];
+      exports = module.exports = function(oli) {
+        if (window.addEventListener != null) {
+          addEventListener("DOMContentLoaded", runScripts, false);
+        } else if (attachEvent != null) {
+          attachEvent("onload", runScripts);
+        }
+        oli.load = load;
+        function load(url, callback) {
+          var xhr = window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          if ("overrideMimeType" in xhr) {
+            xhr.overrideMimeType("text/plain");
+          }
+          xhr.onreadystatechange = function() {
+            var ref;
+            if (xhr.readyState !== xhr.DONE) {
+              return;
+            }
+            if ((ref = xhr.status) === 0 || ref === 200) {
+              callback(xhr.responseText);
+            } else {
+              throw new Error("Could not load " + url);
+            }
+          };
+          xhr.send(null);
+        }
+        function runScripts() {
+          var sources, index = 0;
+          var scripts = document.getElementsByTagName("script");
+          sources = getSources(scripts);
+          execute();
+          function getSources(scripts) {
+            var sources = [];
+            _.forEach(scripts, function(script) {
+              if (mimeTypes.indexOf(script.type) !== -1) {
+                sources.push(script);
+              }
+            });
+            return sources;
+          }
+          function execute(src) {
+            var script = sources[index];
+            if (!script) {
+              return;
+            }
+            if (!src && script.src) {
+              load(script.src, execute);
+            } else {
+              addScript(script, src, index);
+              index += 1;
+              execute();
+            }
+          }
+        }
+        function addScript(script, src, index) {
+          oli.scripts = oli.scripts || [];
+          src = script.innerHTML || src;
+          var source = {
+            id: script.src || index,
+            filename: getFilename(script.src),
+            source: src
+          };
+          if (!script.hasAttribute("data-ignore")) {
+            source.result = oli.parse(src);
+          }
+          oli.scripts.push(source);
+          function getFilename(src) {
+            if (src) {
+              src = src.split("/").slice(-1)[0].match(/\w+\.?\w+/g)[0];
+            }
+            return src;
+          }
+        }
+      };
+    }, {
+      "../helpers": 6
     } ],
     3: [ function(require, module, exports) {
+      "use strict";
+      var fs = require("fs");
+      exports = module.exports = function oliRequireHandler(oli) {
+        require.extensions[".oli"] = function(module, filename) {
+          exports = module.exports = oli.parse(fs.readFileSync(filename, "utf8"));
+        };
+      };
+    }, {
+      fs: 12
+    } ],
+    4: [ function(require, module, exports) {
       "use strict";
       var isBrowser = require("./helpers").isBrowser;
       exports = module.exports = {
@@ -261,13 +272,14 @@
         return isBrowser ? "<b>" + str + "</b>" : "[1m" + str + "[22m";
       }
     }, {
-      "./helpers": 5
+      "./helpers": 6
     } ],
-    4: [ function(require, module, exports) {
+    5: [ function(require, module, exports) {
       "use strict";
       var _ = require("./helpers");
       var e = require("./errors");
       var replacePattern = /[\$]{3}([^\${3}]*)[\$]{3}/g;
+      var uniqueReferencePattern = /^[\$]{3}([^\${3}]*)[\$]{3}$/g;
       exports = module.exports = generator;
       function generator(obj, memory) {
         var result;
@@ -447,8 +459,20 @@
           } else if (_.isArray(body)) {
             if (alias) {
               result[name][alias] = processArray(body);
+              if (attrStore) {
+                var tmp = {};
+                tmp["$$body"] = result[name][alias];
+                tmp["$$attributes"] = attrStore;
+                result[name][alias] = tmp;
+              }
             } else {
               result[name] = processArray(body);
+              if (attrStore) {
+                var tmp = {};
+                tmp["$$body"] = result[name];
+                tmp["$$attributes"] = attrStore;
+                result[name] = tmp;
+              }
             }
           } else {
             if (_.isString(body)) {
@@ -551,17 +575,24 @@
           return obj;
         }
         function processStringReferences(str) {
-          var match = str.match(replacePattern);
-          if (match) {
-            _.forEach(match, function(ref) {
-              var data = fetchFromMemory(removeDollars(ref));
-              if (_.isMutable(data)) {
-                throw new e.TypeError("Interpolated strings references cannot point to blocks: " + removeDollars(ref));
-              }
-              str = str.replace(ref, String(data));
-            });
+          if (hasOnlyReference(str)) {
+            str = fetchFromMemory(removeDollars(str));
+          } else {
+            var match = str.match(replacePattern);
+            if (match) {
+              _.forEach(match, function(ref) {
+                var data = fetchFromMemory(removeDollars(ref));
+                if (_.isMutable(data)) {
+                  throw new e.TypeError("Interpolated strings references cannot point to blocks: " + removeDollars(ref));
+                }
+                str = str.replace(ref, String(data));
+              });
+            }
           }
           return str;
+          function hasOnlyReference(str) {
+            return uniqueReferencePattern.test(str);
+          }
         }
         function fetchFromMemory(ref) {
           var data = memory.fetch(ref);
@@ -583,16 +614,15 @@
         }
       }
     }, {
-      "./errors": 3,
-      "./helpers": 5
+      "./errors": 4,
+      "./helpers": 6
     } ],
-    5: [ function(require, module, exports) {
+    6: [ function(require, module, exports) {
       "use strict";
       var toString = Object.prototype.toString;
       var hasOwn = Object.prototype.hasOwnProperty;
       var isConsole = console && console.log;
       var isBrowser = typeof window !== "undefined";
-      "use strict";
       var _ = exports = module.exports = {};
       _.isBrowser = isBrowser;
       _.isBoolean = function(obj) {
@@ -853,7 +883,7 @@
         return toString.call(obj);
       }
     }, {} ],
-    6: [ function(require, module, exports) {
+    7: [ function(require, module, exports) {
       "use strict";
       var _ = require("./helpers");
       exports = module.exports = Memory;
@@ -926,11 +956,28 @@
         }
       }
     }, {
-      "./helpers": 5
+      "./helpers": 6
     } ],
-    7: [ function(require, module, exports) {
+    8: [ function(require, module, exports) {
       "use strict";
       var _ = require("./helpers");
+      var operator = {
+        ASSIGN: ":",
+        EQUAL: "=",
+        ASSIGN_RAW: ":>",
+        ASSIGN_NOT: "!:",
+        ASSIGN_UNFOLD: ":-",
+        ASSIGN_FOLD: "!=",
+        PIPE: "|",
+        DASH: "-",
+        DOUBLEDASH: "--",
+        RELATIONAL: ">",
+        RELATIONAL_NOT: "!>",
+        AMPERSAND: "&",
+        AMPERSAND_NOT: "!&",
+        EXTEND: ">>",
+        MERGE: ">>>"
+      };
       var nodes = exports = module.exports = {};
       nodes.Literal = function literal(node) {
         return node.value;
@@ -969,11 +1016,11 @@
         var left = traverse(node.left);
         var body = traverse(node.right);
         var duplicateKeys;
-        if (node.operator === "!:") {
+        if (node.operator === operator.ASSIGN_NOT) {
           value[left.name] = null;
           return value;
         }
-        if (_.isArray(body) && (node.operator === ":" || node.operator === "=")) {
+        if (_.isArray(body) && (node.operator === operator.ASSIGN || node.operator === operator.EQUAL)) {
           var objBody = {};
           var hasPrimitive = false;
           body.forEach(function(item) {
@@ -999,7 +1046,7 @@
             body = objBody;
           }
         }
-        if (node.operator === "=") {
+        if (node.operator === operator.EQUAL) {
           memory.allocate(left.name, body);
           return;
         }
@@ -1084,23 +1131,23 @@
           value: traverse(node.argument, node)
         });
         switch (node.operator) {
-         case ">":
+         case operator.RELATIONAL:
           value.type = "reference";
           value.visible = true;
           break;
 
-         case "&":
-         case "!>":
-         case "!&":
+         case operator.AMPERSAND:
+         case operator.AMPERSAND_NOT:
+         case operator.RELATIONAL_NOT:
           value.type = "reference";
           value.visible = false;
           break;
 
-         case ">>":
+         case operator.EXTEND:
           value.type = "extend";
           break;
 
-         case ">>>":
+         case operator.MERGE:
           value.type = "merge";
           break;
         }
@@ -1130,16 +1177,16 @@
         return "$$$" + str + "$$$";
       }
     }, {
-      "./helpers": 5
+      "./helpers": 6
     } ],
-    8: [ function(require, module, exports) {
+    9: [ function(require, module, exports) {
       var Buffer = require("__browserify_Buffer");
       "use strict";
       var _ = require("./helpers");
       var parser = require("./parser").parse;
       var Compiler = require("./compiler");
       var Memory = require("./memory");
-      var addErrorLines = require("./errors").addErrorLines;
+      var errors = require("./errors");
       var empty = "";
       var oli = exports = module.exports = {};
       oli.version = "0.1.0-rc.1";
@@ -1159,7 +1206,7 @@
         }, options);
         return oli.compile(ast, options, code);
       }
-      oli.parse = oli.eval = parse;
+      oli.parse = oli.transpile = parse;
       function compile(ast, options, code) {
         try {
           return new Compiler(ast, options).compile();
@@ -1183,6 +1230,8 @@
           }
           if (code instanceof Buffer) {
             code = code.toString();
+          } else {
+            throw new errors.TypeError("First argument must be an string or buffer");
           }
         }
         options = _.extend({
@@ -1218,7 +1267,9 @@
       }
       oli.tokens = oli.parseTokens = tokens;
       if (_.isBrowser) {
-        require("./browser")(oli);
+        require("./engine/browser")(oli);
+      } else {
+        require("./engine/node")(oli);
       }
       function addToken(loc, node, type) {
         var token = {
@@ -1231,18 +1282,19 @@
         return token;
       }
       function rethrow(error, code) {
-        throw addErrorLines(error, code);
+        throw errors.addErrorLines(error, code);
       }
     }, {
-      "./browser": 1,
-      "./compiler": 2,
-      "./errors": 3,
-      "./helpers": 5,
-      "./memory": 6,
-      "./parser": 9,
-      __browserify_Buffer: 11
+      "./compiler": 1,
+      "./engine/browser": 2,
+      "./engine/node": 3,
+      "./errors": 4,
+      "./helpers": 6,
+      "./memory": 7,
+      "./parser": 10,
+      __browserify_Buffer: 13
     } ],
-    9: [ function(require, module, exports) {
+    10: [ function(require, module, exports) {
       module.exports = function() {
         function peg$subclass(child, parent) {
           function ctor() {
@@ -5007,6 +5059,72 @@
             }
             return s0;
           }
+          function peg$parseStringRawCharacter() {
+            var s0, s1, s2;
+            s0 = peg$currPos;
+            s1 = peg$currPos;
+            peg$silentFails++;
+            if (input.charCodeAt(peg$currPos) === 92) {
+              s2 = peg$c66;
+              peg$currPos++;
+            } else {
+              s2 = peg$FAILED;
+              if (peg$silentFails === 0) {
+                peg$fail(peg$c67);
+              }
+            }
+            peg$silentFails--;
+            if (s2 === peg$FAILED) {
+              s1 = peg$c28;
+            } else {
+              peg$currPos = s1;
+              s1 = peg$c0;
+            }
+            if (s1 !== peg$FAILED) {
+              s2 = peg$parseSourceCharacter();
+              if (s2 !== peg$FAILED) {
+                peg$reportedPos = s0;
+                s1 = peg$c127(s2);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c0;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$c0;
+            }
+            if (s0 === peg$FAILED) {
+              s0 = peg$currPos;
+              if (input.charCodeAt(peg$currPos) === 92) {
+                s1 = peg$c66;
+                peg$currPos++;
+              } else {
+                s1 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                  peg$fail(peg$c67);
+                }
+              }
+              if (s1 !== peg$FAILED) {
+                s2 = peg$parseEscapeSequence();
+                if (s2 !== peg$FAILED) {
+                  peg$reportedPos = s0;
+                  s1 = peg$c128(s2);
+                  s0 = s1;
+                } else {
+                  peg$currPos = s0;
+                  s0 = peg$c0;
+                }
+              } else {
+                peg$currPos = s0;
+                s0 = peg$c0;
+              }
+              if (s0 === peg$FAILED) {
+                s0 = peg$parseLineContinuation();
+              }
+            }
+            return s0;
+          }
           function peg$parseLineContinuation() {
             var s0, s1, s2;
             s0 = peg$currPos;
@@ -5879,14 +5997,6 @@
             }
             return s0;
           }
-          function peg$parseStringRawLiteral() {
-            var s0;
-            s0 = peg$parseDoubleStringCharacter();
-            if (s0 === peg$FAILED) {
-              s0 = peg$parseSingleStringCharacters();
-            }
-            return s0;
-          }
           function peg$parseBlockRawStatement() {
             var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
             s0 = peg$currPos;
@@ -5894,7 +6004,7 @@
             if (s1 !== peg$FAILED) {
               s2 = peg$parse__();
               if (s2 !== peg$FAILED) {
-                s3 = peg$parseAsignRawOperator();
+                s3 = peg$parseBlockAsignmentRawOperators();
                 if (s3 !== peg$FAILED) {
                   s4 = peg$parse__();
                   if (s4 !== peg$FAILED) {
@@ -5912,7 +6022,7 @@
                       s8 = peg$c0;
                     }
                     if (s8 !== peg$FAILED) {
-                      s9 = peg$parseStringRawLiteral();
+                      s9 = peg$parseStringRawCharacter();
                       if (s9 !== peg$FAILED) {
                         peg$reportedPos = s7;
                         s8 = peg$c35(s9);
@@ -5939,7 +6049,7 @@
                         s8 = peg$c0;
                       }
                       if (s8 !== peg$FAILED) {
-                        s9 = peg$parseStringRawLiteral();
+                        s9 = peg$parseStringRawCharacter();
                         if (s9 !== peg$FAILED) {
                           peg$reportedPos = s7;
                           s8 = peg$c35(s9);
@@ -5988,7 +6098,7 @@
                         s8 = peg$c0;
                       }
                       if (s8 !== peg$FAILED) {
-                        s9 = peg$parseStringRawLiteral();
+                        s9 = peg$parseStringRawCharacter();
                         if (s9 !== peg$FAILED) {
                           peg$reportedPos = s7;
                           s8 = peg$c35(s9);
@@ -6015,7 +6125,7 @@
                           s8 = peg$c0;
                         }
                         if (s8 !== peg$FAILED) {
-                          s9 = peg$parseStringRawLiteral();
+                          s9 = peg$parseStringRawCharacter();
                           if (s9 !== peg$FAILED) {
                             peg$reportedPos = s7;
                             s8 = peg$c35(s9);
@@ -6448,13 +6558,7 @@
             if (s1 === peg$FAILED) {
               s1 = peg$parseAsignNotOperator();
               if (s1 === peg$FAILED) {
-                s1 = peg$parseAsignUnfoldOperator();
-                if (s1 === peg$FAILED) {
-                  s1 = peg$parseAsignFoldOperator();
-                  if (s1 === peg$FAILED) {
-                    s1 = peg$parseStartToken();
-                  }
-                }
+                s1 = peg$parseStartToken();
               }
             }
             if (s1 !== peg$FAILED) {
@@ -6462,6 +6566,17 @@
               s1 = peg$c164(s1);
             }
             s0 = s1;
+            return s0;
+          }
+          function peg$parseBlockAsignmentRawOperators() {
+            var s0;
+            s0 = peg$parseAsignRawOperator();
+            if (s0 === peg$FAILED) {
+              s0 = peg$parseAsignUnfoldOperator();
+              if (s0 === peg$FAILED) {
+                s0 = peg$parseAsignFoldOperator();
+              }
+            }
             return s0;
           }
           function peg$parseAsignOperator() {
@@ -7002,7 +7117,7 @@
         };
       }();
     }, {} ],
-    10: [ function(require, module, exports) {
+    11: [ function(require, module, exports) {
       "use strict";
       var _ = require("./helpers");
       var nodes = require("./nodes");
@@ -7048,11 +7163,12 @@
         };
       }
     }, {
-      "./errors": 3,
-      "./helpers": 5,
-      "./nodes": 7
+      "./errors": 4,
+      "./helpers": 6,
+      "./nodes": 8
     } ],
-    11: [ function(require, module, exports) {
+    12: [ function(require, module, exports) {}, {} ],
+    13: [ function(require, module, exports) {
       require = function e(t, n, r) {
         function s(o, u) {
           if (!n[o]) {
@@ -8082,5 +8198,5 @@
       }, {}, []);
       module.exports = require("native-buffer-browserify").Buffer;
     }, {} ]
-  }, {}, [ 8 ])(8);
+  }, {}, [ 9 ])(9);
 });
