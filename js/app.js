@@ -103,7 +103,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     $scope.options = {
       loc: false,
       comments: false,
-      meta: true,
+      meta: false,
       repl: false
     }
 
