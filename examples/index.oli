@@ -11,6 +11,11 @@ html:
       p(class: main-title another-class): 
         | This is a paragraph
       a(href: 'http://h2non.github.io/oli'): Oli Spec
+      textarea:>
+        Lorem ipsum ad his scripta blandit partiendo, 
+        eum fastidii accumsan euripidis in, eum liber 
+        hendrerit an. Qui ut wisi vocibus suscipiantur
+      end
     end
   end
 end
