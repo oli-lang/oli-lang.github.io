@@ -16,7 +16,7 @@ describe > network:
     | it should: be_listening
 end
 
-describe > file (/etc/httpd/conf/httpd.conf):
+describe > file ('/etc/httpd/conf/httpd.conf'):
   it should: be_file
   it should: contain "ServerName www.example.jp"
 end
