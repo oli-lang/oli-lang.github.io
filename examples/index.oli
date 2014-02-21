@@ -2,6 +2,11 @@
 html:
   head:
     &title: This is Oli!
+    script:>
+      if (foo) {
+        bar('oli')
+      }
+    end
   end
   body:
     # use a reference that points to 'title'
@@ -11,7 +16,7 @@ html:
       p(class: main-title another-class): 
         | This is a paragraph
       a(href: 'http://h2non.github.io/oli'): Oli Spec
-      textarea:>
+      textarea:-
         Lorem ipsum ad his scripta blandit partiendo, 
         eum fastidii accumsan euripidis in, eum liber 
         hendrerit an. Qui ut wisi vocibus suscipiantur
