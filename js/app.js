@@ -114,7 +114,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       'name: Oli!',
       'type: language',
       'category: ',
-      ' | - minimalist, markup-like',
+      ' | minimalist, markup-like',
       'version: 0.1.0',
       'open spec: yes',
       'license: MIT',

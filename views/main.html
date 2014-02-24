@@ -3,22 +3,24 @@
   <!--<p class="lead">When markup meets programming</p>-->
   <hr />
   <pre class="language-ruby" highlight>
-# create a referencial value
 url = 'http://schema.org'
-
-&amp;name: The Empire State Building
-description: *name is a 102-story in New York.
+# point information
+&amp;name: Empire State Building
 image: 'http://bit.ly/1hXoBhd'
-context:
+description:-
+  The *name is a 103-story skyscraper 
+  located in Midtown Manhattan
+end
+location > geo:
+  latitude: 40.75
+  longitude: 73.98
+end
+context >> geo:
   name: *url/name
   image:
     id: *url/image.png
     landscape: yes
   end
-end
-geo:
-  latitude: 40.75
-  longitude: 73.98
 end</pre>
   
   <hr />
