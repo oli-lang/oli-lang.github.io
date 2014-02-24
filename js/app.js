@@ -59,7 +59,9 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
         value: scope[attrs.source],
         mode:  "ruby",
         tabSize: 2,
-        lineNumbers: true
+        lineNumbers: true,
+        indentWithTabs: false,
+        electricChars: false
       })
   
       codeMirror.on('change', function () {
@@ -97,7 +99,8 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       'Package manifest', 
       'Product list', 
       'Test DSL', 
-      'Data types'
+      'Data types',
+      'Indentation'
     ]
 
     $scope.options = {

@@ -1,4 +1,4 @@
-/*! oli.js - v0.1.0-rc.1 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-02-24 09:20 */
+/*! oli.js - v0.1.0-rc.1 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-02-24 10:55 */
 !function(e) {
   if ("object" == typeof exports) module.exports = e(); else if ("function" == typeof define && define.amd) define(e); else {
     var f;
@@ -187,7 +187,7 @@
         SyntaxError: SyntaxError,
         CompileError: CompileError,
         ReferenceError: ReferenceError,
-        addErrorLines: addErrorLines
+        handler: handler
       };
       function TypeError(message) {
         this.name = "TypeError";
@@ -212,12 +212,12 @@
         this.column = column;
       }
       CompileError.prototype = SyntaxError.prototype = ReferenceError.prototype = ReferenceError.prototype = Error.prototype;
-      function addErrorLines(error, src) {
+      function handler(error, src) {
         if (error.line != null) {
           error.errorLines = getErrorLines(src, error);
         }
         if (error.name === "SintaxError") {
-          error.fullMessage = SintaxErrorMessage(error);
+          error.fullMessage = sintaxErrorMessage(error);
         } else {
           error.fullMessage = error.name + ": " + error.message;
         }
@@ -258,7 +258,7 @@
         }
         return spaces;
       }
-      function SintaxErrorMessage(error) {
+      function sintaxErrorMessage(error) {
         return "Syntax error on line " + error.line + ", column " + error.column + ": " + error.message;
       }
       function length(n) {
@@ -1075,7 +1075,7 @@
         return token;
       }
       function rethrow(error, code) {
-        throw errors.addErrorLines(error, code);
+        throw errors.handler(error, code);
       }
     }, {
       "./compiler": 1,
