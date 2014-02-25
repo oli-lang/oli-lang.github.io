@@ -33,7 +33,8 @@ strings literals can be unquoted
   'hello', world
   yes, 3.1416
 ]
-# or it can be multi line also with double dash
+# or use the double-dash operator to create
+# first level lists
 --
   'hello'
   world
@@ -63,7 +64,7 @@ value = this is a document hidden value
 # in-line blocks expressions
 hello: world!
 # nested
-it: has: a: 'pretty sintax'
+it: has: a: 'pretty syntax'
 # multi-line blocks
 oli rules!:
   yes # parsed as boolean
@@ -72,8 +73,8 @@ oli rules!:
     nested: block
   end
 end
-# blocks can have attributes also
-oli(language: yes, ugly: no, open: yes, version: 'beta'): hello
+# blocks can have attributes
+oli(language, pretty: yes, open: yes, version: 'beta'): hello
 </pre>
 
 <h3>Comments</h3>
@@ -186,6 +187,5 @@ command: server.sh start *flags
 log:
   | /var/log/deploy.log
   | /var/log/error.log
-
 
 </pre>
