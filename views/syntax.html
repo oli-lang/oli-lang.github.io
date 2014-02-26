@@ -67,7 +67,7 @@ hello: world!
 # nested
 it: has: a: 'pretty syntax'
 # multi-line blocks
-oli rules!:
+oli rules:
   yes # parsed as boolean
   I agree # parsed as string
   another: 
@@ -79,12 +79,31 @@ block:
   | another: value
   | hello
   | 3.1416
+# string blocks
+fold:-
+  it converts newlines
+    to spaces and removes 
+  leading whitespace
+end
+unfold:=
+  the leading indent 
+    (of the first line) and 
+      trailing white space will be stripped:
+end
+# raw blocks
+unfold:>
+  this will be parsed as raw string literal
+    preserving lines, leading indent
+    and ignoring any type of character 
+    or expression inside the block
+end
 # blocks can have attributes
 oli(language, pretty: yes, open: yes, version: 'beta'): hello
 # it also supports assignment blocks with attributes
 oli(language, cool: yes)
 # the above is equivalent to
 oli(language, cool: yes): nil
+oli(language, cool: yes)!:
 </pre>
 
 <h3>Comments</h3>
@@ -116,6 +135,11 @@ hello: '*hello world' # => '*hello world'
 # you can create referenciable values or blocks which will
 # not be present in the compilation output
 value = this is a document hidden value
+# it also support blocks
+block =
+  this is a document 
+  hidden value
+end
 </pre>
 
 <h3>Expressions</h3>
