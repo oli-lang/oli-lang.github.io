@@ -1,5 +1,30 @@
 'use strict';
 
+var exampleCode = "\
+url = 'https://github.com/oli-lang'\n\
+# information\n\
+name: Oli!\n\
+type: language\n\
+version: 0.1.0\n\
+open spec: yes\n\
+license: MIT\n\
+homepage: 'http://oli-lang.org'\n\
+repository: url: '*url/oli'\n\
+categories: - minimalist, markup-like\n\
+description:-\n\
+  Oli is an elegant, expressive,\n\
+  unobstructive and featured\n\
+  minimal language for humans \n\
+end\n\
+features:\n\
+  pretty\n\
+  higienic\n\
+  string interpolation\n\
+  templating\n\
+  linked data\n\
+  nested structures\n\
+end"
+
 angular.module('oli', ['ngRoute', 'ngSanitize'])
   
   .config(['$routeProvider',
@@ -110,23 +135,7 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
       repl: false
     }
 
-    $scope.code = $location.search().code || [
-      'name: Oli!',
-      'type: language',
-      'category: ',
-      ' | minimalist, markup-like',
-      'version: 0.1.0',
-      'open spec: yes',
-      'license: MIT',
-      'homepage: "http://oli-lang.org"',
-      'features:',
-      '  string interpolation: yes',
-      '  templating: yes',
-      '  data references: yes',
-      '  data clone: yes',
-      '  elegant: yes',
-      'end'
-    ].join('\n')
+    $scope.code = $location.search().code || exampleCode
 
     $scope.setCode = function (index) {
       $scope.ast = null
