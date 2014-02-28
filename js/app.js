@@ -2,7 +2,7 @@
 
 var exampleCode = "\
 url = 'https://github.com/oli-lang'\n\
-# information\n\
+# project's information\n\
 name: Oli!\n\
 type: language\n\
 version: 0.1.0\n\
