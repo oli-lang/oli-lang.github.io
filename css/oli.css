@@ -109,6 +109,12 @@ pre {
   overflow: auto;
 }
 
+button.run {
+  position: absolute;
+  float: right;
+  margin: 10px 620px;
+}
+ 
 .output {
   max-height: 450px !important;
 }

@@ -1,23 +1,31 @@
 <h2>Syntax Overview</h2>
 
 <h3>Boolean</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 true
 false
-# equivalent semantic aliases
+# semantic aliases
 yes
 no 
 </pre>
+</div>
 
 <h3>Numbers</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
-2014
-3.1416 # decimal part
+2014 # integer
+3.1416 # float
 -46.01 # signed
 0xFFF # hexadecimal
 </pre>
+</div>
 
 <h3>Strings</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 strings literals can be unquoted
 'and wrapped with quotes'
@@ -27,8 +35,11 @@ escape this \string \end
 # and unicode characters expression as strings
 \u0061\u0062\u0063\u0064\u0065\u0066\u0067
 </pre>
+</div>
 
 <h3>Lists</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 # in-line lists using the dash operator and commas
 - 'hello', world, yes, 3.1416
@@ -45,8 +56,11 @@ escape this \string \end
   yes
   3.1416
 </pre>
+</div>
 
 <h3>Assignment</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 # single value assignment
 hello: world!
@@ -59,8 +73,11 @@ number: 3.141592
 # or lists
 list: [ 1, 2, 3 ]
 </pre>
+</div>
 
 <h3>Blocks</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 # in-line blocks expressions
 hello: world!
@@ -91,33 +108,38 @@ unfold:=
       trailing white space will be stripped:
 end
 # raw blocks
-unfold:>
+raw:>
   this will be parsed as raw string literal
     preserving lines, leading indent
     and ignoring any type of character 
     or expression inside the block
 end
 # blocks can have attributes
-oli(language, pretty: yes, open: yes, version: 'beta'): hello
+salutation(language, open: yes, version: 'beta'): hello
 # it also supports assignment blocks with attributes
-oli(language, cool: yes)
+features(language, open: yes, version: 'beta')
 # the above is equivalent to
-oli(language, cool: yes): nil
-oli(language, cool: yes)!:
+null(language, cool: yes): nil
+empty(language, cool: yes)!:
 </pre>
+</div>
 
 <h3>Data References</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 # you can create references with "&amp;" operator
-&amp;hello: oli!
+&amp;name: oli
 # and consum it with *
-name: *name is simple!
+text: *name is simple!
 # another valid reference consumition expressions
-value: *{name} or *'name'
-# any type of expression in the document can consume a reference
-it: says: "hello *hello" # => 'hello oli!'
+value: *{name}
+another: *'name'
+# any type of expression in the document can consume references
+# including string interpolation expressions
+it: says: "hello *name" # => 'hello oli'
 # single quotes strings cannot allow interpolated data references
-hello: '*hello world' # => '*hello world'
+hello: 'hello *name' # => 'hello *name'
 # you can create referenciable values or blocks which will
 # not be present in the compilation output
 value = this is a document hidden value
@@ -128,34 +150,48 @@ block =
   hidden value
 end
 </pre>
+</div>
 
 <h3>Block Expressions</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
-# block alias with implicit reference
-oli > language: hello
+# block alias expression
+oli > says: hello
 # you can also create alias references for blocks 
-oli &amp; salutation: hello
-say: *salutation
+this &amp; salutation: hello
+it > says: *salutation
 # or using the alias reference operator
-oli &amp;> salutation: hello
+text &amp;> salutation: hello
 # that is equivalent to
-oli > salutation &amp; salutation: hello
-# block inheritance
+some > salutation &amp; salutation: hello
+
+# blocks can inherit from another referenceable blocks
+# create a sample referenceable block
 &amp;yaml: 
   rules: yes
 end
-oli >> yaml:
+# then inherits from it
+block >> yaml:
   cool: yes
 end
-# or deep inheritance
-oli >>> yaml:
+# you can also deeply inherit from it as well
+deep >>> yaml:
   cool: yes
 end
-# and multiple inheritance
-oli >> yaml >> json: cool!
+# and multiple inheritance :)
+multiple >> yaml >> another:
+  cool: yes
+end
+&amp;another: 
+  love: it
+end
 </pre>
+</div>
 
 <h3>Comments</h3>
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight>
 # you can use single-line comment
 hello: oli! # on any part of the source
@@ -168,21 +204,24 @@ name:
   simple!
 end
 </pre>
+</div>
 
-<h2><a href="#/try?code=%23%20this%20a%20is%20a%20comment%0Aname:%20Hello%20Oli!%0Aversion:%200.1.0%0A%0A%23%23%0A%20%20Multi-line%20comment%0A%23%23%0A%0Aserver%20deploy%20%3E%20zeus:%0A%20%20server%20%3E%20host%20url:%20'http:%2F%2Fzeus.server.com'%20%23%20quoted%20string%0A%20%20port:%209000%20%23%20number%20as%20primitive%20value%0A%20%20retry:%20yes%20%23%20yes%20is%20a%20primitive%20%0A%20%20%23%20nested%20block%0A%20%20authentication:%20%0A%20%20%20%20%23%20in-line%20lists%0A%20%20%20%20tokens:%0A%20%20%20%20%20%20-%20$pasdw0rd,%20$%E2%82%ACcr3t%0A%20%20%20%20end%0A%20%20end%0Aend%0A%0A%23%20extends%20from%20zeus%20block%0Aserver%20deploy%20%3E%3E%20zeus%20%3E%20hera:%0A%20%20server:%20'http:%2F%2Fhera.server.com'%0Aend%0A%0A%23%20in-line%20nested%20structures%0Ahey:%20you:%20are:%20seeing:%20oli!%0A%0A%23%20blocks%20can%20have%20attributes%0Anested%20block%20(alias:%20make,%20type:%20'user%20question'):%0A%20%20%23%20multi-line%20nested%20structures%0A%20%20you:%20%23%20implitic%20list%0A%20%20%20%20born%0A%20%20%20%20in%20%23%20this%20is%20a%20string%0A%20%20%20%20%5B%2080,%20'th'%20%5D,%20%3F%20%23%20old,%20ehn%3F%0A%20%20end%0Aend%0A%0A%23%20empty%20blocks%0Anon%20existence!:%0A%0A%23%20creates%20a%20copy%20of%20hera%20block%0Adeploy:%20*hera%0A%0A%23%20hidden%20block%20in%20compilation%20output%20%0Averbose%20%3D%20%5C--verbose%0A%23%20short-hand%20reference%20declaration%20operator%0A%26flags:%20%5C--debug%20--trace%20*verbose%0A%0A%23%20templating%20with%20inteporaled%20variables%0Acommand:%20server.sh%20start%20*flags%0A%0A%23%20multi-line%20unquoted%20string%0Alog:%0A%20%20%7C%20%2Fvar%2Flog%2Fdeploy.log%0A%20%20%7C%20%2Fvar%2Flog%2Ferror.log%0A&amp;parse">Featured Example</a></h2>
+<h2>Featured Example</h2>
+
+<div>
+<button type="button" class="btn btn-primary btn-xs run" run-code>Run code</button>
 <pre class="language-ruby" highlight style="height: 100%">
-# this a is a comment
+# basic information
 name: Hello Oli!
 version: 0.1.0
 
 ##
-  Multi-line comment
+  Server configuration
 ##
-
-server deploy > zeus:
-  server > host url: 'http://zeus.server.com' # quoted string
+server deploy &amp;> zeus:
   port: 9000 # number as primitive value
-  retry: yes # yes is a primitive 
+  retry: yes # yes is a primitive
+  server > host url: 'http://zeus.server.com' 
   # nested block
   authentication: 
     # in-line lists
@@ -192,8 +231,8 @@ server deploy > zeus:
   end
 end
 
-# extends from zeus block
-server deploy >> zeus > hera:
+# creates a new server config extending from zeus
+server deploy >> zeus &amp;> hera:
   server: 'http://hera.server.com'
 end
 
@@ -210,7 +249,7 @@ nested block (alias: make, type: 'user question'):
   end
 end
 
-# empty blocks
+# empty block
 non existence!:
 
 # creates a copy of hera block
@@ -226,7 +265,7 @@ command: server.sh start *flags
 
 # multi-line unquoted string
 log:
-  | /var/log/deploy.log
-  | /var/log/error.log
-
+  | stdout: /var/log/success.log
+  | stderr: /var/log/error.log
 </pre>
+</div>

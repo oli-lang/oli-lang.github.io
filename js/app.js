@@ -27,8 +27,10 @@ end"
 
 angular.module('oli', ['ngRoute', 'ngSanitize'])
   
-  .config(['$routeProvider',
-    function($routeProvider) {
+  .config(['$routeProvider', '$locationProvider',
+    function ($routeProvider, $locationProvider) {
+      $locationProvider.html5Mode(false)
+
       $routeProvider.when('/syntax', {
         templateUrl: 'views/syntax.html'
       })
@@ -61,6 +63,34 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
   .directive('highlight', function(PrismHighlight) {
     return function(scope, element, attrs) {
       element.html(PrismHighlight(element.text()))
+    }
+  })
+
+  .directive('runCode', function ($location, $sce) {
+    return function (scope, element) {
+      element.on('click', parseCode)
+
+      function parseCode() {
+        var code = convertEntities(fetchNodeCode())
+        scope.$apply(function () {
+          $location
+            .path('/try')
+            .search('code', code)
+            .search('parse', true)
+        })
+      }
+
+      function fetchNodeCode() {
+        var node = element.parent().find('pre')[0]
+        return node.textContent || node.innerText
+      }
+
+      function convertEntities(code) {
+        return code
+          .replace('&amp;', '&')
+          .replace('&gt;', '>')
+          .replace('&lt;', '<')
+      }
     }
   })
 
