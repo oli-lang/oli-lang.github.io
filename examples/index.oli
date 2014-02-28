@@ -4,7 +4,7 @@ html:
     &title: This is Oli!
     script:>
       if (foo) {
-        bar('oli')
+        bar(2 ^ 2)
       }
     end
   end
@@ -13,8 +13,8 @@ html:
     h1: *title 
     # main container
     div(class: container, id: main):
-      p(class: main-title another-class): 
-        | This is a paragraph
+      p(class: text some-class): 
+        | This is a paragraph text
       a(href: 'http://h2non.github.io/oli'): Oli Spec
       textarea:-
         Lorem ipsum ad his scripta blandit partiendo, 

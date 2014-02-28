@@ -82,8 +82,14 @@ body {
 .no-link {
   color: #000;
 }
+
 .no-link:hover, .no-link:focus {
   text-decoration: none;
+}
+
+.jumbotron {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .pointer {
@@ -100,7 +106,6 @@ textarea.form-control {
 }
 
 pre {
-  max-height: 900px;
   overflow: auto;
 }
 
