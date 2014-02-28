@@ -104,6 +104,10 @@ pre {
   overflow: auto;
 }
 
+.output {
+  max-height: 450px !important;
+}
+
 .CodeMirror {
   height: 375px !important;
 }

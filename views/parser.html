@@ -59,9 +59,9 @@
             <li class="pointer" ng-class="{ active: tab == 'ast'}"  ng-click="tab = 'ast'"><a>AST</a></li>
             <li class="pointer" ng-class="{ active: tab == 'tokens'}"  ng-click="tab = 'tokens'"><a>Tokens</a></li>
           </ul>
-          <pre highlight class="language-javascript" ng-show="tab == 'result'" precode="output"></pre>
-          <pre highlight class="language-javascript" ng-show="tab == 'ast'" precode="ast"></pre>
-          <pre highlight class="language-javascript" ng-show="tab == 'tokens'" precode="tokens"></pre>
+          <pre highlight class="language-javascript output" ng-show="tab == 'result'" precode="output"></pre>
+          <pre highlight class="language-javascript output" ng-show="tab == 'ast'" precode="ast"></pre>
+          <pre highlight class="language-javascript output" ng-show="tab == 'tokens'" precode="tokens"></pre>
         </div>
       </div>
     </div>
