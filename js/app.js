@@ -9,7 +9,7 @@ version: 0.1.0\n\
 open spec: yes\n\
 license: MIT\n\
 homepage: 'http://oli-lang.org'\n\
-repository: url: '*url/oli'\n\
+repository: url: \"*url/oli\"\n\
 categories: - minimalist, markup-like\n\
 description:-\n\
   Oli is an elegant, expressive,\n\
