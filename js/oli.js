@@ -1,4 +1,4 @@
-/*! oli.js - v0.1.0-rc.1 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-02-28 08:24 */
+/*! oli.js - v0.1.0 - MIT License - https://github.com/oli-lang/oli-js | Generated 2014-03-01 11:07 */
 !function(e) {
   if ("object" == typeof exports) module.exports = e(); else if ("function" == typeof define && define.amd) define(e); else {
     var f;
@@ -481,9 +481,13 @@
           return obj;
         }
         function replaceReferences(str) {
-          var matches;
+          var matches, count = 1;
           while (matches = matchReferences(str)) {
             str = replaceReferences(str, matches);
+            if (count > 1e3) {
+              throw new e.CompileError("Circular reference detected");
+            }
+            count += 1;
           }
           return str;
           function matchReferences(str) {
@@ -975,7 +979,7 @@
       var Compiler = require("./compiler");
       var errors = require("./errors");
       var oli = exports = module.exports = {};
-      oli.version = "0.1.0-rc.1";
+      oli.version = "0.1.0";
       oli.parser = parser;
       oli.Compiler = Compiler;
       function parse(code, options) {
@@ -7562,10 +7566,10 @@
         });
         return value;
       }
-      function Identifier(node, traverse) {
+      function Identifier(node) {
         return node.name;
       }
-      function ReferenceExpression(node, traverse) {
+      function ReferenceExpression(node) {
         return referenceStringTemplate(node.name);
       }
       function AttributeExpression(node, traverse) {
@@ -7641,15 +7645,12 @@
       }
       function trimLeadingIndent(str, column) {
         if (!column) return str;
-        column *= column === 1 ? 4 : 2;
+        column += 1;
         var buf = [];
-        var leadingSpaces = new RegExp("^" + Array(column).join("\\s"));
-        var leadingTabs = new RegExp("^" + Array(column).join("\\t"));
+        var leadingSpaces = new RegExp("^(\\s){0," + column + "}");
+        var leadingTabs = new RegExp("^(\\t){0," + column + "}");
         str.split(_.EOL).forEach(function(line, i) {
           line = line.replace(leadingSpaces, "").replace(leadingTabs, "");
-          if (i > 0 && !isOddIndentLevel(line)) {
-            line = getIndentChar(line) + line;
-          }
           line = trimRight(line);
           buf.push(line);
         });
@@ -7657,20 +7658,6 @@
       }
       function trimRight(str) {
         return str.replace(/(\s+|\t+)$/, "");
-      }
-      function isOddIndentLevel(line) {
-        var indent = line.match(/^[(\s+|\t+)]/);
-        if (indent) {
-          return indent.length % 2 === 0;
-        }
-        return false;
-      }
-      function getIndentChar(line) {
-        if (/^\t/.test(line)) {
-          return "  ";
-        } else {
-          return " ";
-        }
       }
     }, {
       "./errors": 4,
