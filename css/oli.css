@@ -136,9 +136,9 @@ button.run {
 }
 
 .loading {
-  width: 100%;
+  width: 730px;
   height: 600px;
   position:relative;
-  left: 50%;
+  left: 365px;
   top: 300px;
 }
