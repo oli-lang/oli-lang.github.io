@@ -144,6 +144,10 @@ angular.module('oli', ['ngRoute', 'ngSanitize'])
     }
   })
 
+  .controller('BodyCtrl', function ($scope) {
+    $scope.loaded = true
+  })
+
   .controller('ParserDemoCtrl', function ($scope, $log, $location, $sce, Oli) {
     
     $scope.error = null

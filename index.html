@@ -18,7 +18,7 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container">
+    <div class="container" ng-controller="BodyCtrl">
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li><a href="#syntax">Syntax Overview</a></li>
@@ -28,7 +28,8 @@
         <h3 class="text-muted"><a href="#/" class="no-link">Oli Language</a> <small><cite title="stage">beta</cite></small></h3>
       </div>
 
-      <div ng-view></div>
+      <div class="loading" ng-show="loading"><img src="images/loading.gif" /></div>
+      <div ng-view onload="loading = false"></div>
       
       <div class="footer">
         <p>Brought to the world by <a href="https://github.com/oli-lang/oli#authors">geeks</a> with obsession, caffeine and <a href="http://grooveshark.com/#!/profile/The+Matrix/22190192">good music</a>
